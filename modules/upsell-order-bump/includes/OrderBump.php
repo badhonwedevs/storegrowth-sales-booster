@@ -64,13 +64,15 @@ class OrderBump implements HookRegistry {
 				$checked = 'checked';
 			}
 
-			$_product      = wc_get_product( $offer_product_id );
-			$regular_price = $_product->get_regular_price();
-			if ( 'discount' === $offer_type ) {
-				$offer_price = ( $regular_price - ( $regular_price * $offer_amount / 100 ) );
-			} else {
-				$offer_price = $offer_amount;
-			}
+					$_product      = wc_get_product( $offer_product_id );
+		$regular_price = $_product->get_regular_price();
+		// Use sale price if available, otherwise use regular price for discount calculation
+		$current_price = $_product->get_sale_price() ? $_product->get_sale_price() : $regular_price;
+		if ( 'discount' === $offer_type ) {
+			$offer_price = ( $current_price - ( $current_price * $offer_amount / 100 ) );
+		} else {
+			$offer_price = $offer_amount;
+		}
 
 			$cart                            = WC()->cart;
 			$product_already_added_from_shop = false;

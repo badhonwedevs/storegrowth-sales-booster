@@ -85,7 +85,11 @@ echo 'color:' . esc_attr($bump_info->product_description_text_color) . ';';
 echo 'font-size:' . esc_attr($bump_info->product_description_font_size) . 'px;'
 ?>
 				">
-			<span style="text-decoration:line-through"><?php echo esc_html(get_woocommerce_currency_symbol()) . esc_attr(number_format((float) $regular_price, 2)); ?></span>
+			<?php
+			// Use sale price if available, otherwise use regular price for display
+			$display_price = $_product->get_sale_price() ? $_product->get_sale_price() : $regular_price;
+			?>
+			<span style="text-decoration:line-through"><?php echo esc_html(get_woocommerce_currency_symbol()) . esc_attr(number_format((float) $display_price, 2)); ?></span>
 			&nbsp;
 			<span style=""><?php echo esc_html(get_woocommerce_currency_symbol()) . esc_attr(number_format((float) $offer_price, 2)); ?></span>
 			</div>

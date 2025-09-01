@@ -186,8 +186,9 @@ class EnqueueScript implements HookRegistry {
 			$sale_price    = $_product->get_sale_price();
 			$regular_price = $_product->get_regular_price();
 
-			// Prepare woocommerce price data.
-			$price = esc_html( $regular_price );
+			// Prepare woocommerce price data - use sale price if available, otherwise regular price
+			$current_price = $sale_price ? $sale_price : $regular_price;
+			$price = esc_html( $current_price );
 			$price = wp_strip_all_tags( html_entity_decode( wc_price( $price ) ) );
 
 			// Render woocommerce price with currency symbol.
@@ -221,12 +222,16 @@ class EnqueueScript implements HookRegistry {
 				foreach ( $variations as $variation ) {
 						$variation_id         = $variation['variation_id'];
 						$variation_attributes = $variation['attributes'];
-						$regular_price        = number_format( $variation['display_regular_price'], 2 ) . $currency_symbol;
+						// Use sale price if available, otherwise use regular price for variations
+						$variation_sale_price = $variation['display_price'];
+						$variation_regular_price = $variation['display_regular_price'];
+						$current_variation_price = $variation_sale_price < $variation_regular_price ? $variation_sale_price : $variation_regular_price;
+						$formatted_price      = number_format( $current_variation_price, 2 ) . $currency_symbol;
 						$variation_root_name  = $_product->get_title();
-						$variation_name       = $variation_root_name . '(' . implode( ', ', $variation_attributes ) . ') (' . $regular_price . ')';
+						$variation_name       = $variation_root_name . '(' . implode( ', ', $variation_attributes ) . ') (' . $formatted_price . ')';
 
 						$simple_product_for_offer[] = array(
-							'price'            => $regular_price,
+							'price'            => $formatted_price,
 							'value'            => $variation_id,
 							'currency'         => $currency_symbol,
 							'offer_categories' => $category_names,
@@ -258,33 +263,39 @@ class EnqueueScript implements HookRegistry {
 		foreach ( $products as $product ) {
 			$_product = wc_get_product( $product->ID );
 
-			if ( $_product->is_type( 'simple' ) ) {
-				$product_list_for_view[ $product->ID ] = array(
-					'ID'            => $product->ID,
-					'post_title'    => $_product->get_title(),
-					'image_url'     => wp_get_attachment_url( get_post_thumbnail_id( $product->ID ), 'thumbnail' ),
-					'regular_price' => number_format( (int) $_product->get_regular_price(), 2 ),
-				);
-			}
-			if ( $_product->is_type( 'variable' ) ) {
-				$variations = $_product->get_available_variations();
+					if ( $_product->is_type( 'simple' ) ) {
+			// Use sale price if available, otherwise use regular price
+			$current_price = $_product->get_sale_price() ? $_product->get_sale_price() : $_product->get_regular_price();
+			$product_list_for_view[ $product->ID ] = array(
+				'ID'            => $product->ID,
+				'post_title'    => $_product->get_title(),
+				'image_url'     => wp_get_attachment_url( get_post_thumbnail_id( $product->ID ), 'thumbnail' ),
+				'regular_price' => number_format( (int) $current_price, 2 ),
+			);
+		}
+					if ( $_product->is_type( 'variable' ) ) {
+			$variations = $_product->get_available_variations();
 
-				foreach ( $variations as $variation ) {
-						$variation_id         = $variation['variation_id'];
-						$variation_attributes = $variation['attributes'];
-						$regular_price        = number_format( $variation['display_regular_price'], 2 );
-						$variation_root_name  = $_product->get_title();
-						$variation_name       = $variation_root_name . '(' . implode( ', ', $variation_attributes ) . ')';
-						$image_url            = $variation['image']['url'];
+			foreach ( $variations as $variation ) {
+					$variation_id         = $variation['variation_id'];
+					$variation_attributes = $variation['attributes'];
+					// Use sale price if available, otherwise use regular price for variations
+					$variation_sale_price = $variation['display_price'];
+					$variation_regular_price = $variation['display_regular_price'];
+					$current_variation_price = $variation_sale_price < $variation_regular_price ? $variation_sale_price : $variation_regular_price;
+					$formatted_price      = number_format( $current_variation_price, 2 );
+					$variation_root_name  = $_product->get_title();
+					$variation_name       = $variation_root_name . '(' . implode( ', ', $variation_attributes ) . ')';
+					$image_url            = $variation['image']['url'];
 
-						$product_list_for_view[ $variation_id ] = array(
-							'ID'            => $variation_id,
-							'post_title'    => $variation_name,
-							'image_url'     => $image_url,
-							'regular_price' => $regular_price,
-						);
-				}
+					$product_list_for_view[ $variation_id ] = array(
+						'ID'            => $variation_id,
+						'post_title'    => $variation_name,
+						'image_url'     => $image_url,
+						'regular_price' => $formatted_price,
+					);
 			}
+		}
 		}
 		return $product_list_for_view;
 	}
