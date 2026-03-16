@@ -1,6 +1,6 @@
-=== StoreGrowth: Smart Sales Booster for WooCommerce | BOGO, Upsells, Direct Checkout, Quick View, Side Cart ===
+=== StoreGrowth: Smart Sales Booster for WooCommerce | BOGO, Upsells, Direct Checkout, Quick View, Order Bumps ===
 Contributors: wedevs, tareq1988, nizamuddinbabu
-Tags: BOGO, Upsells, Direct Checkout, Quick View, Side Cart
+Tags: BOGO, Upsells, Direct Checkout, Quick View, Order Bumps
 
 Requires at least: 5.4
 Tested up to: 6.8.2
@@ -9,13 +9,13 @@ Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-WooCommerce Sales Booster with BOGO, upsells, direct checkout, quick view, side cart, countdowns, floating bar, free shipping & stock bar.
+Sell more with BOGO, upsells, order bumps, FOMO alerts and countdown timers for Woo. Built by weDevs, a trusted name in WordPress for over 13 years.
 
 == Description == 
 
 = Boost your WooCommerce sales with StoreGrowth’s advanced marketing modules, including Side Cart, Direct Checkout, Add-to-Cart Redirect, BOGO offers, Quick View, Upsell Order Bumps, Sales Countdown, Live Sales Notifications, and more! =
 
-Your WooCommerce Store Is Leaking Sales. StoreGrowth Fixes It.
+Your WooCommerce Store Is Losing Sales. StoreGrowth Fixes It.
 
 Running a WooCommerce store is tough. You work hard to get visitors, but lose them to abandoned carts, checkout friction, or single-item orders. Juggling multiple plugins only slows your site and creates conflicts.
 
@@ -43,7 +43,7 @@ StoreGrowth isn’t just another plugin; it’s a complete conversion system. Wi
 
 - 🚀 *Increase AOV with Upsells & BOGO* - turn single-item sales into multi-product orders.  
 
-- 🛒 *Reduce Cart Abandonment* - a sleek Side Cart and Direct Checkout keep buyers moving.  
+- 🛒 *Reduce Cart Abandonment* - a sleek Side Cart, Buy Now button, and Direct Checkout keep buyers moving.  
 
 - ⏳ *Create Urgency & Scarcity* - countdowns and stock bars trigger action now, not later.  
 
@@ -51,9 +51,9 @@ StoreGrowth isn’t just another plugin; it’s a complete conversion system. Wi
 
 - ✅ *Replace 10+ Plugins* - enjoy faster sites and simpler management with one toolkit. 
 
-== The StoreGrowth Playbook: A Module-by-Module Guide ==
+== The StoreGrowth Sales Booster: A Module-by-Module Guide ==
 
-You've seen the powerful results you can achieve. Now, let's explore the tools. 
+You've seen the powerful results you can achieve. Now, let's explore the tools available for you. 
 
 === Use Case 1: Fix Cart Abandonment & Checkout Friction ===
 
@@ -83,7 +83,7 @@ Let decisive buyers skip extra clicks and head straight to purchase with **[Dire
 
 - Redirect cart activity directly to checkout  
 
-- Display Direct Checkout buttons on product pages or the shop grid  
+- Display Buy Now buttons on product pages or the shop grid  
 
 - Full control over design - button text, style, colors, and placement  
 
@@ -258,7 +258,7 @@ Real-time stock progress creates a FOMO scarcity. When users visit your store, t
 
 = Will side cart show real-time updates and subtotals of products?
 
-Yes, After adding a product the AJAX cart updates automatically, showing the subtotal and the products can be added or removed from the side cart.
+Yes, After adding a product the AJAX side cart updates automatically, showing the subtotal and the products can be added or removed from the side cart.
 
 = How does the floating notification bar work?
 
